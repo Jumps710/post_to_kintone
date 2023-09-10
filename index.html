@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日報ツール</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <script charset="utf-8" src="https://static.worksmobile.net/static/wm/woff/edge/3.6/sdk.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- 各種フォーム要素とプレビューのモーダル (中身は省略) -->
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2 class="text-center mb-4">日報フォーム</h2>
+
+                <!-- Error messages -->
+                <div id="woffIdErrorMessage" class="alert alert-danger" hidden>You have not assigned any value for WOFF ID. If you are using any other platform, please add your WOFF ID.</div>
+                <div id="woffInitErrorMessage" class="alert alert-danger" hidden>Something went wrong with WOFF initialization. WOFF initialization can fail if a user clicks "Cancel" on the "Grant permission" screen, or if an error occurs in the process of <code>woff.init()</code>.</div>
+                <div id="nodeWoffIdErrorMessage" class="alert alert-danger" hidden>Unable to receive the WOFF ID as an environment variable.</div>
+
+                <!-- Form -->
+                <div class="bg-white p-4 rounded shadow-sm">
+                    <form>
+                        <div class="mb-3">
+                            <label for="selectedDate" class="form-label">日付を選択してください</label>
+                            <input type="date" class="form-control custom-form-control" name="selectedDate" id="selectedDate">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="startTime" class="form-label">業務開始時間</label>
+                            <input type="time" class="form-control custom-form-control" name="startTime" id="startTime">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="endTime" class="form-label">業務終了時間</label>
+                            <input type="time" class="form-control custom-form-control" name="endTime" id="endTime">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="selectedSite" class="form-label">現場名を選択してください</label>
+                            <select class="form-select custom-form-control" name="selectedSite" id="selectedSite">
+                                <option value="現場A">現場A</option>
+                                <option value="現場B">現場B</option>
+                                <option value="現場C">現場C</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="cameraInput" class="form-label">施工現場の写真をUPしてください</label>
+                            <input type="file" class="form-control custom-form-control" id="cameraInput" name="cameraInput" capture="camera">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="numberInput" class="form-label">作業区分を入力してください (1〜10までの数字)</label>
+                            <input type="number" class="form-control custom-form-control" id="numberInput" name="numberInput" min="1" max="10" pattern="[1-9]|10">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">送信</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- プレビュー画面のモーダル -->
+<div class="modal" tabindex="-1" id="previewModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">入力内容の確認</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- ここにプレビューの内容が表示されます -->
+          <p id="previewContent"></p>
+          <img id="previewImage" alt="Image Preview" width="100%">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">戻る</button>
+          <button type="button" class="btn btn-primary" id="confirmSubmit">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
